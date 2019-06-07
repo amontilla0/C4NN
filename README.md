@@ -10,7 +10,7 @@ The state of a game can be printed in console showing an output similar to the f
 ## Neural Network Results
 So far, using a simple neural network with Q-Learning the results are as follows:
 Notice: player 1 is the trained neural network
-![trained_c4nn](assets/trained_c4nn.jpg)
+![trained_c4nn](assets/trained_c4nn.png)
 
 ## To be continued..
 user interface to be added in order to play against the trained neural network.
