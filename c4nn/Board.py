@@ -142,6 +142,11 @@ class Board:
         row = BOARD_H - h - 1
         return self.coord_to_pos((row, col))
 
+    def next_pos_in_col(self, col):
+        h = self.col_heights[col]
+        row = BOARD_H - h - 1
+        return self.coord_to_pos((row, col))
+
     def is_legal(self, pos: int) -> bool:
         """
         Tests whether a board position can be played, i.e. is currently empty

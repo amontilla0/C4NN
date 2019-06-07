@@ -6,10 +6,9 @@ from c4nn.Board import Board, GameResult
 from c4nn.Player import Player
 
 
-class RandomPlayer(Player):
+class HumanPlayer(Player):
     """
-    This player can play a game of Connect 4 by randomly choosing a free spot on the board.
-    It does not learn or get better.
+    This player can play a game of Connect 4 by requesting inputs from a human.
     """
 
     def __init__(self):
@@ -21,11 +20,21 @@ class RandomPlayer(Player):
 
     def move(self, board: Board) -> (GameResult, bool):
         """
-        Making a random move
+        Making a move taken from input
         :param board: The board to make a move on
         :return: The result of the move
         """
-        pos = board.random_empty_spot()
+        valid = False
+        while not valid
+            try:
+                print('please select a column[0-6]: ', end='')
+                col = int(input())
+
+                pos = board.next_pos_in_col(col)
+                valid = board.is_legal(pos)
+            except ValueError:
+                print('not a valid number, try again.')
+
         _, res, finished = board.move(pos, self.side)
         return res, finished
 

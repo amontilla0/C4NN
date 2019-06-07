@@ -13,7 +13,7 @@ from c4nn.Player import Player, GameResult
 
 class QNetwork:
     """
-    Contains a TensorFlow graph which is suitable for learning the Tic Tac Toe Q function
+    Contains a TensorFlow graph which is suitable for learning the Connect 4 Q function
     """
 
     def __init__(self, name: str, learning_rate: float):
@@ -72,7 +72,7 @@ class QNetwork:
 
 class NNQPlayer(Player):
     """
-    Implements a Tic Tac Toe player based on a Reinforcement Neural Network learning the Tic Tac Toe Q function
+    Implements a Connect 4 player based on a Reinforcement Neural Network learning the Connect 4 Q function
     """
 
     def board_state_to_nn_input(self, state: np.ndarray) -> np.ndarray:
@@ -82,7 +82,7 @@ class NNQPlayer(Player):
         9 bits are set to 1 on positions with our opponents pieces, and the final 9 bits are set on empty positions on
         the board.
         :param state: The board state that is to be converted to a feature vector.
-        :return: The feature vector representing the input Tic Tac Toe board state.
+        :return: The feature vector representing the input Connect 4 board state.
         """
         res = np.array([(state == self.side).astype(int),
                         (state == Board.other_side(self.side)).astype(int),

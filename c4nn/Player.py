@@ -8,7 +8,7 @@ from c4nn.Board import Board, GameResult
 
 class Player(ABC):
     """
-    Abstract class defining the interface we expect any Tic Tac Toe player class to implement.
+    Abstract class defining the interface we expect any Connect 4 player class to implement.
     This will allow us to pit various different implementation against each other
     """
 
