@@ -1,23 +1,42 @@
-from Board import Board, Chip
-from RandomPlayer import RandomPlayer
-import numpy as np
+import tensorflow as tf
+import matplotlib.pyplot as plt
 
-b = Board()
-rp = RandomPlayer(Chip.RED)
-yp = RandomPlayer(Chip.YELLOW)
-plays = 0
-players = [rp, yp]
+from util import evaluate_players
+from c4nn.TFSessionManager import TFSessionManager
+from c4nn.RandomPlayer import RandomPlayer
+from c4nn.SimpleNNQPlayer import NNQPlayer
 
-b.print_board()
+train = True
 
-winner = 0
-done = False
+nnplayer = NNQPlayer("QLearner", learning_rate=0.01, win_value=100.0, loss_value=-100.0, training=train)
+rndplayer = RandomPlayer()
 
-while not done:
-    players[plays % 2].play(b)
-    plays += 1
-    winner, done = b.check_for_winner()
+TFSessionManager.set_session(tf.Session())
 
-b.print_board()
+if not train:
+    TFSessionManager.load_session('models/SimpleNNQPlayer')
 
-print('winner: {}, plays: {}'.format(winner, plays))
+sess = TFSessionManager.get_session()
+
+if train:
+    sess.run(tf.global_variables_initializer())
+
+# num battles
+nb = 200
+# games per battle
+gpb = 100
+
+game_number, p1_wins, p2_wins, draws = evaluate_players(nnplayer, rndplayer, num_battles = nb, games_per_battle=gpb)
+
+if train:
+    TFSessionManager.save_session('models/SimpleNNQPlayer')
+
+plt.plot(game_number, draws, color=(0.7, 0.7, 0.7), label='draws')
+plt.plot(game_number, p1_wins, 'r-', label='player 1')
+plt.plot(game_number, p2_wins, 'y-', label='player 2')
+plt.xlabel('battle iterations ({} games per battle)'.format(gpb))
+plt.ylabel('battle winning ratio (%)')
+plt.legend(loc='best')
+
+plt.show()
+TFSessionManager.set_session(None)
