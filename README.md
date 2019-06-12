@@ -12,5 +12,8 @@ So far, using a simple neural network with Q-Learning the results are as follows
 Notice: player 1 is the trained neural network
 ![trained_c4nn](assets/trained_c4nn.png)
 
+Using a more advanced aNN (Experience Replay + Gradient Descent) that was trained against a limited random minmax algorithm the results against human players improved. Below is a showcase of the aNN (RED) playing a limited minmax algorithm of depth 3 (YELLOW):
+![trained_c4nn](assets/NN_vs_RandomMinMax.gif)
+
 ## To be continued..
 user interface to be added in order to play against the trained neural network.
