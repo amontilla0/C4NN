@@ -48,8 +48,8 @@ class Board:
         """
         res = 0
         for i in range(BOARD_SIZE):
-            res *= 3.0
-            res += self.state[i]
+            res *= 3
+            res += int(self.state[i])
 
         return res
 
@@ -76,10 +76,10 @@ class Board:
         Create a new Board. If a state is passed in, we use that otherwise we initialize with an empty board
         :param s: Optional board state to initialise the board with
         """
-        self.col_heights = [0, 0, 0, 0, 0, 0, 0]
+        self.col_heights = np.array([0, 0, 0, 0, 0, 0, 0])
 
         if s is None:
-            self.state = np.ndarray(shape=(1, BOARD_SIZE), dtype=int)[0]
+            self.state = np.zeros(BOARD_SIZE)
             self.reset()
         else:
             self.state = s.copy()
@@ -118,7 +118,7 @@ class Board:
         Resets the game board. All fields are set to be EMPTY.
         """
         self.state.fill(EMPTY)
-        self.col_heights = [0, 0, 0, 0, 0, 0, 0]
+        self.col_heights = np.array([0, 0, 0, 0, 0, 0, 0])
 
     def board_is_full(self) -> int:
         """
@@ -159,6 +159,11 @@ class Board:
         height = self.col_heights[col]
         return (0 <= pos < BOARD_SIZE) and (height < BOARD_H) and (row == BOARD_H - height - 1)
 
+    def valid_moves(self):
+        # get column indices where there is still room to add chips.
+        cols = (self.col_heights < BOARD_H).nonzero()[0]
+        return [self.next_pos_in_col(i) for i in cols]
+
     def move(self, position: int, side: int) -> (np.ndarray, GameResult, bool):
         """
         Places a piece of side "side" at position "position". The position is to be provided as 1D.
@@ -170,7 +175,7 @@ class Board:
         :return: The game state after the move, The game result after the move, Whether the move finished the game
         """
 
-        if self.state[position] != EMPTY:
+        if not self.is_legal(position):
             print('Illegal move')
             raise ValueError("Invalid move")
 
