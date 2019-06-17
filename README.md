@@ -9,7 +9,7 @@ The state of a game can be printed in console showing an output similar to the f
 <br/>
 ![c4_terminal](assets/c4_terminal.png)
 
-## Neural Network approcahes
+## Neural Network approaches
 
 ### Simple Neural Network vs Random player
 Using a simple neural network with Q-Learning and no memory buffer playing against a program that played randomly took about 5 minutes to complete after playing 100 games for 200 generations (20,000 in total), the results are shown below:
@@ -38,3 +38,9 @@ Now, battling against human players, the aNN could corner its opponents as shown
 ![nn_vs_human](assets/NN_vs_Human.png)
 <br/>
 Moral of the story: We got a pretty decent aNN that can play Connect 4 against humans by using TensorFlow and Keras technology :)
+
+## Playing against the machine
+To play against the trained model just clone this project and run
+`python HumanVsMachine.py`
+on the root directory.
+When you're turn is on you would be prompted "please select a column[0-6]:" to select one of the 7 columns where you want to drop a yellow chip. Good luck!
