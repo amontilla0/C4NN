@@ -2,7 +2,7 @@ from IPython.display import HTML, display
 from c4nn.Player import Player
 from c4nn.Board import Board, GameResult, RED, YELLOW
 import tensorflow as tf
-
+from time import sleep
 
 def print_board(board):
     display(HTML("""
@@ -15,23 +15,32 @@ def print_board(board):
     """ + board.html_str()))
 
 
-def play_game(board: Board, player1: Player, player2: Player, print_steps = False):
+def play_game(board: Board, player1: Player, player2: Player, print_steps = False, reset_board=True, shift = False, slow=False):
     player1.new_game(RED)
     player2.new_game(YELLOW)
-    board.reset()
+    if reset_board:
+        board.reset()
 
     players = [player1, player2]
-    plays = 0
+    plays = 1 if shift else 0
     finished = False
     while not finished:
-        result, finished = players[plays % 2].move(board)
-        plays += 1
+        try:
+            result, finished = players[plays % 2].move(board)
+            plays += 1
 
-        if print_steps:
-            print(board)
+            if print_steps:
+                print(board, end='\n\n\n' if not finished else '')
 
-        if finished:
-            final_result = result
+            if slow:
+                sleep(0.45)
+
+            if finished:
+                final_result = result
+        except KeyboardInterrupt:
+            print('last board:')
+            print(board.state.__repr__())
+            exit()
 
     # noinspection PyUnboundLocalVariable
     player1.final_result(final_result)
@@ -46,7 +55,7 @@ def battle(player1: Player, player2: Player, num_games: int = 100000, silent: bo
     cross_count = 0
     naught_count = 0
     for _ in range(num_games):
-        result = play_game(board, player1, player2)
+        result = play_game(board, player1, player2, False)
         if result == GameResult.RED_WIN:
             cross_count += 1
         elif result == GameResult.YELLOW_WIN:
@@ -55,7 +64,7 @@ def battle(player1: Player, player2: Player, num_games: int = 100000, silent: bo
             draw_count += 1
 
     if not silent:
-        print("After {} game we have draws: {}, Player 1 wins: {}, and Player 2 wins: {}.".format(num_games, draw_count,
+        print("After {} game(s) we have draws: {}, Player 1 wins: {}, and Player 2 wins: {}.".format(num_games, draw_count,
                                                                                                   cross_count,
                                                                                                   naught_count))
 
@@ -74,6 +83,7 @@ def evaluate_players(p1: Player, p2: Player, games_per_battle=100, num_battles=1
     game_counter = 0
 
     for i in range(num_battles):
+        print('*** Running generation {} of {} ***'.format(game_counter+1, num_battles))
         p1win, p2win, draw = battle(p1, p2, games_per_battle, silent)
         p1_wins.append(p1win)
         p2_wins.append(p2win)

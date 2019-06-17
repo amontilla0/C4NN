@@ -25,7 +25,7 @@ class HumanPlayer(Player):
         :return: The result of the move
         """
         valid = False
-        while not valid
+        while not valid:
             try:
                 print('please select a column[0-6]: ', end='')
                 col = int(input())

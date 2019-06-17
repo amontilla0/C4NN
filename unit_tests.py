@@ -42,6 +42,61 @@ def play_n_plot():
 
     plt.show()
 
+def hash_checks():
+    b1 = Board(
+    np.array([1,0,0,0,0,0,0,
+              2,0,0,0,0,0,0,
+              1,0,0,0,0,0,0,
+              2,0,0,0,0,0,0,
+              2,0,0,0,0,0,0,
+              2,2,0,1,1,1,0   ])
+    )
+
+    b2 = Board(
+    np.array([1,0,0,0,0,0,0,
+              2,0,0,0,0,0,0,
+              1,0,0,0,0,0,0,
+              2,0,0,0,0,0,0,
+              2,0,0,0,0,0,0,
+              2,0,0,1,1,0,0   ])
+    )
+
+    b3 = Board(
+    np.array([2,2,2,2,2,2,2,
+              2,2,2,2,2,2,2,
+              2,2,2,2,2,2,2,
+              2,2,2,2,2,2,2,
+              2,2,2,2,2,2,2,
+              2,2,2,2,2,2,1   ])
+    )
+
+    b4 = Board(
+    np.array([2,2,2,2,2,2,2,
+              2,2,2,2,2,2,2,
+              2,2,2,2,2,2,2,
+              2,2,2,2,2,2,2,
+              2,2,2,2,2,2,2,
+              2,2,2,2,2,2,2   ])
+    )
+
+    print(b1, b2)
+    print(int(b1.hash_value()))
+    print(int(b2.hash_value()))
+
+    print(b1.hash_value() == b2.hash_value())
+
+    print(int(b3.hash_value()))
+    print(int(b4.hash_value()))
+
+    print(b3.hash_value() == b4.hash_value())
+
+    # import pdb; pdb.set_trace()
+
+    return b1, b2
+
+
 #empty_sampling()
 
-play_n_plot()
+#play_n_plot()
+
+a, b = hash_checks()
