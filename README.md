@@ -43,4 +43,4 @@ Moral of the story: We got a pretty decent aNN that can play Connect 4 against h
 To play against the trained model just clone this project and run
 `python HumanVsMachine.py`
 on the root directory.
-When you're turn is on you would be prompted "please select a column[0-6]:" to select one of the 7 columns where you want to drop a yellow chip. Good luck!
+When your turn is on, you'd be prompted "please select a column[0-6]:" to select one of the 7 columns where you want to drop a yellow chip. Good luck!
