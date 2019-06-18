@@ -171,9 +171,9 @@ class DeepExpDoubleDuelQPlayer(Player):
 
     def board_state_to_nn_input(self, state: np.ndarray) -> np.ndarray:
         """
-        Converts a Tic Tac Tow board state to an input feature vector for the Neural Network. The input feature vector
-        is a bit array of size 27. The first 9 bits are set to 1 on positions containing the player's pieces, the second
-        9 bits are set to 1 on positions with our opponents pieces, and the final 9 bits are set on empty positions on
+        Converts a Connect 4 board state to an input feature vector for the Neural Network. The input feature vector
+        is a bit array of size 126. The first 429 bits are set to 1 on positions containing the player's pieces, the second
+        42 bits are set to 1 on positions with our opponents pieces, and the final 42 bits are set on empty positions on
         the board.
         :param state: The board state that is to be converted to a feature vector.
         :return: The feature vector representing the input Connect 4 board state.

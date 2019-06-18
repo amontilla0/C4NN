@@ -37,7 +37,7 @@ BOARD_SIZE = BOARD_W * BOARD_H  # type: int
 
 class Board:
     """
-    The class to encode a tic-tac-toe board, including its current state of pieces.
+    The class to encode a Connect 4 board, including its current state of pieces.
     Also contains various utility methods.
     """
 
@@ -143,6 +143,11 @@ class Board:
         return self.coord_to_pos((row, col))
 
     def next_pos_in_col(self, col):
+        """
+        Returns the position where a chip could be placed, given a column in the board
+        :param col: The column where the chip is meant to placed
+        :return: The next free position (index) in the state array, based on the specified column
+        """
         h = self.col_heights[col]
         row = BOARD_H - h - 1
         return self.coord_to_pos((row, col))
@@ -160,6 +165,10 @@ class Board:
         return (0 <= pos < BOARD_SIZE) and (height < BOARD_H) and (row == BOARD_H - height - 1)
 
     def valid_moves(self):
+        """
+        List of all the columns where a player could make a valid move
+        :return: A list of column indexes (from 0 to 6) where a move can be made
+        """
         # get column indices where there is still room to add chips.
         cols = (self.col_heights < BOARD_H).nonzero()[0]
         return [self.next_pos_in_col(i) for i in cols]
@@ -269,6 +278,11 @@ class Board:
         return res
 
     def val_to_disc(self, value):
+        """
+        Coloring for the chips printed on the terminal.
+        :param value: Either RED, YELLOW or EMPTY.
+        :return: Either a red disc, yellow disc or blank space depending on the given value
+        """
         if value == EMPTY:
             return ' '
         elif value == YELLOW:
